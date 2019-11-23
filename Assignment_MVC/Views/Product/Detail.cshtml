@@ -1,0 +1,175 @@
+﻿@model Assignment_MVC.Models.Product
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_LayoutPartial.cshtml";
+}
+<div class="container">
+    <div class="nn-product-view">
+        <div class="col-md-9 nn-margin-bottom">
+
+            <div class="nn-product-image-box col-sm-9">
+                <div class="product-name">
+                    <h1>@Model.Name</h1>
+                </div>
+                <div class="nn-product-image-box-main  ">
+                    <img class="img-responsive" src="@Model.Image" />
+
+                </div>
+
+
+            </div>
+
+            <div class="nn-product-shop col-sm-12">
+
+
+                <span class="sku_wrapper">
+                    <span class="item-title">Product Code:</span>
+                    <span>
+                        <strong>
+                            @Model.Name
+                        </strong>
+                    </span>
+                </span>
+                <span><br /></span>
+                <span class="category-url-wrapper">
+                    <span class="item-title">Category: </span>
+
+                </span>
+
+
+                <p class="availability in-stock">
+                    <span class="item-title">
+                        <i>Availability: </i>
+                    </span>
+                    <span>
+                        <strong>
+                            @Model.Quantity
+                        </strong>
+                    </span>
+                    In stock
+                </p>
+                <div class="add-to-box">
+                    <div class="add-to-cart nn-margin-bottom">
+                        <div class="qty-box">
+                            <label for="qty">Qty:</label>
+                            <input type="text" style="width:50px" class="form-control" name="qty" id="qty" maxlength="12" value="1" title="Qty">
+
+                        </div>
+                    </div>
+
+                    <button type="button" title="Add to Cart" class="btn btn-default add-to-cart" data-id="@Model.Id">
+                        <span>Add to Cart</span>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+</div>
+<style>
+    /* Tab Navigation */
+    .nav-tabs {
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+
+        .nav-tabs > li > a {
+            background: #DADADA;
+            border-radius: 0;
+            box-shadow: inset 0 -8px 7px -9px rgba(0,0,0,.4),-2px -2px 5px -2px rgba(0,0,0,.4);
+        }
+
+        .nav-tabs > li.active > a,
+        .nav-tabs > li.active > a:hover {
+            background: #fff;
+            box-shadow: inset 0 0 0 0 rgba(0,0,0,.4),-2px -3px 5px -2px rgba(0,0,0,.4);
+        }
+
+    /* Tab Content */
+    .tab-pane {
+        background: #fff;
+        box-shadow: 0 0 4px rgba(0,0,0,.4);
+        border-radius: 0;
+        padding: 10px;
+    }
+
+    /*  responsive facebook comment box*/
+    .fb_iframe_widget,
+    .fb_iframe_widget span,
+    .fb_iframe_widget span iframe[style] {
+        min-width: 100% !important;
+        width: 100% !important;
+    }
+
+
+    .scroll-img {
+        border-left: 1px solid #DADADA;
+        overflow: hidden;
+    }
+
+        .scroll-img ul {
+            height: 800px;
+            margin: 0;
+        }
+
+            .scroll-img ul li {
+                display: block;
+            }
+</style>
+
+@section scripts{
+    <script src="/Content/js/jquery-1.10.2.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="/Content/js/jquery-ui.js"></script>
+    <script src="/Content/js/jquery.scrollbox.js"></script>
+
+
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+
+    <script>
+        $(function () {
+            $('#demo5').scrollbox({
+                linear: false,  // Scroll method
+                startDelay: 2,  // Start delay (in seconds)
+                delay: 3,   // Delay after each scroll event (in seconds)
+                step: 5,// Distance of each single step (in pixels)
+                speed: 32,  // Delay after each single step (in milliseconds)
+                switchItems: 1, // Items to switch after each scroll event
+                direction: 'vertical',
+                distance: 'auto',
+                autoPlay: true,
+                onMouseOverPause: true,
+                paused: false,
+                queue: null
+            });
+            $('#demo5-backward').click(function () {
+                $('#demo5').trigger('backward');
+            });
+            $('#demo5-forward').click(function () {
+                $('#demo5').trigger('forward');
+            });
+        });
+    </script>
+    <script>
+        $(function () {
+            $(".add-to-cart").click(function () {
+                pid = $(this).attr("data-id");
+                $.ajax({
+                    url: "/Cart/Add",
+                    data: { id: pid },
+                    success: function (response) {
+                        $("#nn-cart-count").html(response.Count);
+                        $("#nn-cart-total").html(response.Total);
+                    }
+                });
+            });
+        });
+    </script>
+
+}
